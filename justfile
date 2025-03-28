@@ -22,7 +22,9 @@ _help:
     echo ""
     just --list --unsorted --list-heading $'📚 Commands for @metapage/docu-notion:\n'
 
-# Run the dev server (docs and blog are NOT generated from notion)
+# Build the package
 build:
-  npm run build
+  npm run build-only
     
+publish:
+  npm run semantic-release

@@ -12,7 +12,6 @@ import { standardExternalLinkConversion } from "../plugins/externalLinks";
 import { IDocuNotionConfig } from "./configuration";
 import { modifiedStandardInternalLinkConversion } from "../metapage-plugins/modifiedStandardInternalLinkConversion";
 import { correctNotionUrlsInMermaid } from "../metapage-plugins/correctNotionUrlsInMermaid";
-import { notionColumnsUpgraded } from "../metapage-plugins/notionColumnsUpgraded";
 
 const defaultConfig: IDocuNotionConfig = {
   plugins: [
