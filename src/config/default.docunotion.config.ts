@@ -10,6 +10,9 @@ import { standardTableTransformer } from "../plugins/TableTransformer";
 import { standardVideoTransformer } from "../plugins/VideoTransformer";
 import { standardExternalLinkConversion } from "../plugins/externalLinks";
 import { IDocuNotionConfig } from "./configuration";
+import { modifiedStandardInternalLinkConversion } from "../metapage-plugins/modifiedStandardInternalLinkConversion";
+import { correctNotionUrlsInMermaid } from "../metapage-plugins/correctNotionUrlsInMermaid";
+import { notionColumnsUpgraded } from "../metapage-plugins/notionColumnsUpgraded";
 
 const defaultConfig: IDocuNotionConfig = {
   plugins: [
@@ -33,6 +36,12 @@ const defaultConfig: IDocuNotionConfig = {
     // Regexps plus javascript `import`s that operate on the Markdown output
     imgurGifEmbed,
     gifEmbed,
+
+    // Metapage plugins
+    modifiedStandardInternalLinkConversion,
+    correctNotionUrlsInMermaid,
+    // notionColumnsUpgraded,
+    modifiedStandardInternalLinkConversion,
   ],
 };
 

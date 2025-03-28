@@ -1,10 +1,7 @@
 import { CodeBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
-import {
-  IDocuNotionContext,
-  IPlugin,
-  Log,
-  NotionBlock,
-} from "../src/plugins/pluginTypes";
+import { IDocuNotionContext, IPlugin } from "../plugins/pluginTypes";
+import { NotionBlock } from "../types";
+import { Log } from "..";
 
 // Helper function to join URL paths properly
 function joinPaths(...parts: string[]): string {

@@ -1,6 +1,6 @@
 // current docu-notion does not prefix the slug with
 // e.g. /docs which breaks links
-import { IDocuNotionContext, IPlugin } from "../src/plugins/pluginTypes";
+import { IDocuNotionContext, IPlugin } from "../plugins/pluginTypes";
 
 export const modifiedStandardInternalLinkConversion: IPlugin = {
   name: "modified standard internal link conversion",

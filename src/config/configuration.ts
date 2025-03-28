@@ -29,12 +29,7 @@ export async function loadConfigAsync(): Promise<IDocuNotionConfig> {
       verbose(`Did not find configuration file, using defaults.`);
     }
 
-    // Load custom plugins if specified
-    const customPluginPaths = found?.config?.customPluginPaths || [];
-    const pluginLoader = new PluginLoader({ customPluginPaths });
-    const customPlugins = await pluginLoader.loadAllPlugins();
-
-    const pluginsWithInitializers = [...(found?.config?.plugins || []), ...customPlugins].filter(
+    const pluginsWithInitializers = [...(found?.config?.plugins || [])].filter(
       (p: IPlugin) => p.init !== undefined
     );
     const initializers = pluginsWithInitializers?.map(
@@ -43,7 +38,7 @@ export async function loadConfigAsync(): Promise<IDocuNotionConfig> {
 
     await Promise.all(initializers || []);
 
-    [...(found?.config?.plugins || []), ...customPlugins].forEach(async (plugin: IPlugin) => {
+    [...(found?.config?.plugins || [])].forEach(async (plugin: IPlugin) => {
       if (plugin.init !== undefined) {
         verbose(`Initializing plugin ${plugin.name}...`);
         await plugin.init(plugin);
@@ -52,8 +47,7 @@ export async function loadConfigAsync(): Promise<IDocuNotionConfig> {
 
     // Combine default plugins with config plugins and custom plugins
     config = {
-      plugins: defaultConfig.plugins.concat(found?.config?.plugins || []).concat(customPlugins),
-      customPluginPaths,
+      plugins: defaultConfig.plugins.concat(found?.config?.plugins || []),
     };
   } catch (e: any) {
     error(e.message);

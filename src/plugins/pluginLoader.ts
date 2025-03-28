@@ -1,6 +1,6 @@
-import { IPlugin } from './pluginTypes';
-import fs from 'fs';
-import path from 'path';
+import { IPlugin } from "./pluginTypes";
+import fs from "fs";
+import path from "path";
 
 export interface PluginLoaderOptions {
   customPluginPaths?: string[];
@@ -8,29 +8,32 @@ export interface PluginLoaderOptions {
 
 export class PluginLoader {
   private defaultPluginPath: string;
-  private customPluginPaths: string[];
+  private metapagePluginPath: string;
 
-  constructor(options: PluginLoaderOptions = {}) {
+  constructor() {
     this.defaultPluginPath = __dirname;
-    this.customPluginPaths = options.customPluginPaths || [];
+    // Path to metapage plugins relative to the project root
+    this.metapagePluginPath = path.join(process.cwd(), "metapage-plugins");
   }
 
   /**
-   * Loads all plugins from both default and custom plugin directories
+   * Loads all plugins from both default and metapage plugin directories
    */
   async loadAllPlugins(): Promise<IPlugin[]> {
     const plugins: IPlugin[] = [];
 
-    // Load default plugins
-    const defaultPlugins = await this.loadPluginsFromDirectory(this.defaultPluginPath);
+    // Load default plugins first
+    const defaultPlugins = await this.loadPluginsFromDirectory(
+      this.defaultPluginPath
+    );
     plugins.push(...defaultPlugins);
 
-    // Load custom plugins from each custom plugin path
-    for (const customPath of this.customPluginPaths) {
-      if (fs.existsSync(customPath)) {
-        const customPlugins = await this.loadPluginsFromDirectory(customPath);
-        plugins.push(...customPlugins);
-      }
+    // Load metapage plugins and append them to the end
+    if (fs.existsSync(this.metapagePluginPath)) {
+      const metapagePlugins = await this.loadPluginsFromDirectory(
+        this.metapagePluginPath
+      );
+      plugins.push(...metapagePlugins);
     }
 
     return plugins;
@@ -44,7 +47,12 @@ export class PluginLoader {
     const files = fs.readdirSync(dirPath);
 
     for (const file of files) {
-      if (file.endsWith('.ts') && !file.endsWith('.spec.ts') && !file.includes('pluginTypes') && !file.includes('pluginLoader')) {
+      if (
+        file.endsWith(".ts") &&
+        !file.endsWith(".spec.ts") &&
+        !file.includes("pluginTypes") &&
+        !file.includes("pluginLoader")
+      ) {
         const modulePath = path.join(dirPath, file);
         try {
           const module = await import(modulePath);
@@ -68,14 +76,12 @@ export class PluginLoader {
   private isValidPlugin(plugin: any): plugin is IPlugin {
     return (
       plugin &&
-      typeof plugin === 'object' &&
-      typeof plugin.name === 'string' &&
-      (
-        Array.isArray(plugin.notionBlockModifications) ||
+      typeof plugin === "object" &&
+      typeof plugin.name === "string" &&
+      (Array.isArray(plugin.notionBlockModifications) ||
         Array.isArray(plugin.notionToMarkdownTransforms) ||
         plugin.linkModifier ||
-        Array.isArray(plugin.regexMarkdownModifications)
-      )
+        Array.isArray(plugin.regexMarkdownModifications))
     );
   }
-} 
+}

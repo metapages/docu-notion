@@ -1,6 +1,6 @@
 import { getHashParamValueJsonFromUrl } from "@metapages/hash-query";
 import { MetapageDefinitionV3 } from "@metapages/metapage";
-import { IDocuNotionContext, IPlugin } from "../../src/plugins/pluginTypes";
+import { IDocuNotionContext, IPlugin } from "../../plugins/pluginTypes";
 
 import fetch from "node-fetch";
 

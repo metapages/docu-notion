@@ -1,6 +1,6 @@
-# Custom Plugins Directory
+# Metapage Plugins
 
-This directory contains custom plugins for docu-notion. These plugins will be loaded in addition to the default plugins.
+This directory contains Metapage plugins for docu-notion. These plugins are automatically loaded and appended to the end of the default plugin set.
 
 ## Plugin Structure
 
@@ -10,15 +10,8 @@ Each plugin should be a TypeScript file that exports a plugin object conforming 
 import { IPlugin } from '../src/plugins/pluginTypes';
 
 const myPlugin: IPlugin = {
-  name: 'My Custom Plugin',
+  name: 'My Metapage Plugin',
   // Add your plugin functionality here
-  regexMarkdownModifications: [
-    {
-      regex: /pattern/g,
-      replacementPattern: 'replacement',
-      includeCodeBlocks: false,
-    },
-  ],
 };
 
 export default myPlugin;
@@ -34,12 +27,4 @@ You can implement any of the following features in your plugin:
 4. `regexMarkdownModifications`: Perform regex replacements on the markdown output
 5. `init`: Perform async initialization when the plugin is loaded
 
-See the `IPlugin` interface in `src/plugins/pluginTypes.ts` for more details.
-
-## Loading Custom Plugins
-
-Custom plugins in this directory will be automatically loaded when running docu-notion. You can also specify additional custom plugin directories in your configuration.
-
-## Example
-
-See `example.ts` in this directory for a simple example plugin. 
+See the `IPlugin` interface in `src/plugins/pluginTypes.ts` for more details. 
