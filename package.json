@@ -92,8 +92,10 @@
   "volta": {
     "node": "18.16.0"
   },
-  "version": "1.0.1",
+  "version": "0.12.0",
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ]
   }
 }
