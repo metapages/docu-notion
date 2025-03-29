@@ -27,4 +27,4 @@ build:
   npm run build-only
     
 publish:
-  npm run semantic-release
+  npm run semantic-release -- --no-ci
